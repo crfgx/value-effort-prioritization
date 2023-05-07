@@ -28,6 +28,8 @@ const App = () => {
           { x: 2, y: 1, label: "large-xl_low" },
           { x: 2, y: 2, label: "large-xl_high" },
         ],
+        borderColor: "#4cccff",
+        borderWidth: 2, //doesn't show lines
       },
     ],
   };
@@ -110,6 +112,7 @@ const App = () => {
         className="feature_list"
         style={{
           display: "inline-block",
+          width: "10%",
         }}
       >
         <div className="feature1" style={{ marginRight: "20px" }}>
@@ -182,22 +185,42 @@ const App = () => {
               </select>
             </div>
           </div>
-          <hr className="dashed" style={{ marginTop: 10 }}></hr>
+          <div>
+            <hr className="dashed" style={{ marginTop: 10 }}></hr>
+          </div>
         </div>
         <div className="info">
-          <p>Testing 1</p>
+          <p style={{ fontSize: 10 }}>
+            The methodology is a graph for prioritization matrix with axes for
+            “Business Value” and “Complexity/Effort.” The chart is then broken
+            down into quadrants as follows: high value, low complexity; high
+            value, high complexity; low value, low complexity; and low value,
+            high complexity. The team will then evaluate each initiative and
+            plot it on the graph, providing a visual representation of every
+            initiative’s anticipated value and required effort.
+            <br></br>
+            <a
+              href="https://www.productplan.com/glossary/value-vs-complexity/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              ProductPlan
+            </a>
+          </p>
         </div>
       </div>
+
       <div
         className="chart"
         style={{
-          width: "100%",
+          width: "90%",
           marginTop: 20,
+          marginLeft: 50,
           backgroundImage: `url(${background})`,
           backgroundPosition: "center",
           backgroundSize: "70%",
           backgroundRepeat: "no-repeat",
-          opacity: 0.7,
+          opacity: 0.6,
         }}
       >
         <Scatter
@@ -207,19 +230,25 @@ const App = () => {
                 label: feature1,
                 data: feature1Data,
                 pointRadius: 40,
-                pointBackgroundColor: "red",
+                pointBackgroundColor: "#BF1717",
                 pointBorderWidth: 2,
                 pointBorderColor: "black",
+                pointHoverRadius: 40,
               },
               {
                 label: feature2,
                 data: feature2Data,
                 pointRadius: 40,
-                pointBackgroundColor: "blue",
+                pointBackgroundColor: "#FFEB18",
                 pointBorderWidth: 2,
                 pointBorderColor: "black",
+                pointHoverRadius: 40,
               },
             ],
+            borderColor: "#4cccff",
+            borderWidth: 3,
+            showLine: true, // show line in scatter plot
+            fill: false, // only show line
           }}
           options={options}
         />
