@@ -28,6 +28,24 @@
   color: #61dafb;
 }
 
+.table {
+  margin: 200px;
+}
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 585px;
+  margin: auto;
+}
+
+.template {
+  opacity: 0.2;
+  margin: -255px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
