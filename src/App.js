@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Scatter } from "react-chartjs-2";
 import "chart.js/auto";
 import background from "./image.svg";
+import { inject } from "@vercel/analytics";
+
+inject();
 
 const App = () => {
   const [value1, setValue1] = useState("low");
