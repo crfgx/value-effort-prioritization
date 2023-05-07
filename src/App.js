@@ -184,6 +184,9 @@ const App = () => {
           </div>
           <hr className="dashed" style={{ marginTop: 10 }}></hr>
         </div>
+        <div className="info">
+          <p>Testing 1</p>
+        </div>
       </div>
       <div
         className="chart"
