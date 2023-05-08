@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, createRef } from "react";
 import { Scatter } from "react-chartjs-2";
 import "chart.js/auto";
 import background from "./image.svg";
 import { inject } from "@vercel/analytics";
+import { useScreenshot, createFileName } from "use-react-screenshot";
 
 inject();
 
@@ -13,6 +14,24 @@ const App = () => {
   const [value2, setValue2] = useState("high");
   const [effort2, setEffort2] = useState("large-xl");
   const [feature2, setFeature2] = useState("feature2");
+  const [image, takeScreenshot] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0,
+  });
+
+  const download = (
+    image,
+    { name = "value-effort-screenshot", extension = "jpeg" } = {}
+  ) => {
+    const a = document.createElement("a");
+    a.href = image;
+    a.download = createFileName(extension.name);
+    a.click();
+  };
+
+  const getImage = () => takeScreenshot(ref.current).then(download);
+
+  const ref = createRef(null);
 
   const data = {
     datasets: [
@@ -107,6 +126,7 @@ const App = () => {
         justifycontent: "flex-end",
         margin: 10,
       }}
+      ref={ref}
     >
       <div
         className="feature_list"
@@ -189,6 +209,11 @@ const App = () => {
             <hr className="dashed" style={{ marginTop: 10 }}></hr>
           </div>
         </div>
+        <div>
+          <button type="button" onClick={getImage}>
+            Save Screenshot
+          </button>
+        </div>
         <div className="info">
           <p style={{ fontSize: 10 }}>
             The methodology is a graph for prioritization matrix with axes for
@@ -204,54 +229,68 @@ const App = () => {
               target="_blank"
               rel="noreferrer"
             >
-              ProductPlan
+              Read More
             </a>
           </p>
         </div>
       </div>
-
       <div
         className="chart"
         style={{
           width: "90%",
-          marginTop: 20,
           marginLeft: 50,
-          backgroundImage: `url(${background})`,
-          backgroundPosition: "center",
-          backgroundSize: "70%",
-          backgroundRepeat: "no-repeat",
-          opacity: 0.6,
+          position: "relative",
         }}
       >
-        <Scatter
-          data={{
-            datasets: [
-              {
-                label: feature1,
-                data: feature1Data,
-                pointRadius: 40,
-                pointBackgroundColor: "#BF1717",
-                pointBorderWidth: 2,
-                pointBorderColor: "black",
-                pointHoverRadius: 40,
-              },
-              {
-                label: feature2,
-                data: feature2Data,
-                pointRadius: 40,
-                pointBackgroundColor: "#FFEB18",
-                pointBorderWidth: 2,
-                pointBorderColor: "black",
-                pointHoverRadius: 40,
-              },
-            ],
-            borderColor: "#4cccff",
-            borderWidth: 3,
-            showLine: true, // show line in scatter plot
-            fill: false, // only show line
+        <div className="scatter">
+          <Scatter
+            data={{
+              datasets: [
+                {
+                  label: feature1,
+                  data: feature1Data,
+                  pointRadius: 40,
+                  pointBackgroundColor: "#BF1717",
+                  pointBorderWidth: 2,
+                  pointBorderColor: "black",
+                  pointHoverRadius: 40,
+                },
+                {
+                  label: feature2,
+                  data: feature2Data,
+                  pointRadius: 40,
+                  pointBackgroundColor: "blue",
+                  pointBorderWidth: 2,
+                  pointBorderColor: "black",
+                  pointHoverRadius: 40,
+                },
+              ],
+              borderColor: "#4cccff",
+              borderWidth: 3,
+              showLine: true, // show line in scatter plot
+              fill: false, // only show line
+            }}
+            options={options}
+          />
+        </div>
+        <div
+          className="background"
+          style={{
+            position: "absolute",
+            width: "70%",
+            height: "auto",
+            bottom: "15%",
+            left: "15%",
+            backgroundRepeat: "no-repeat",
+            opacity: 0.5,
           }}
-          options={options}
-        />
+        >
+          <img
+            src={background}
+            alt="background"
+            style={{ width: "100%", height: "auto" }}
+          />
+        </div>
       </div>
       <div
         className="footer"
